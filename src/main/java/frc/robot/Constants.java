@@ -10,24 +10,11 @@ package frc.robot;
  */
 public final class Constants {
 
-  // Constants related to operator input devices like controllers and button mappings.
-  public static class OperatorConstants {}
-  
-  // Constants defining IDs and ports for motors, sensors, and other devices.
-  public static class DeviceConstants {}
-
-  // Constants specifying physical dimensions and characteristics of the robot.
-  public static class PhysicalConstants {}
-
-  // Constants used for autonomous routines, including speeds and trajectory parameters.
-  public static class AutoConstants {}
-
-  // Constants for PID controller tuning values for various subsystems.
-  public static class PIDConstants {}
-
-  // Constants for vision processing, including camera parameters and pipeline indices.
-  public static class VisionConstants {}
-
-  // Constants for motor configurations, such as gear ratios and current limits.
-  public static class MotorConstants {}
+  public static final class KitBotConstants {
+    public static final int ROLLER_MOTOR_ID = 5;
+    public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
+    public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
+    public static final double ROLLER_FIRST_EJECT_VALUE = -0.2;
+    public static final double ROLLER_STACKED_EJECT_VALUE = -0.3;
+  }
 }
