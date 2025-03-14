@@ -64,7 +64,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("JogPieceCommand", new JogPieceCommand(kitbot));
 
         // Create auto chooser and put it on the Auto tab in Shuffleboard
-        autoChooser = AutoBuilder.buildAutoChooser("1m Forward");
+        autoChooser = AutoBuilder.buildAutoChooser("Center Drop Plus One");
         autoTab.add("Auto Mode", autoChooser)
             .withSize(3, 2)
             .withPosition(0, 0);
