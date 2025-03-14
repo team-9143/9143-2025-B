@@ -78,8 +78,8 @@ public class RobotContainer {
         swerve.setDefaultCommand(
             // Drivetrain will execute this command periodically
             swerve.applyRequest(() ->
-                drive.withVelocityX(-driver_controller.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driver_controller.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
+                drive.withVelocityX(-driver_controller.getLeftY() * MaxSpeed * 0.75) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driver_controller.getLeftX() * MaxSpeed * 0.75) // Drive left with negative X (left)
                     .withRotationalRate(-driver_controller.getRightX() * MaxAngularRate)// Drive clockwise with X (right)
             )
         );
