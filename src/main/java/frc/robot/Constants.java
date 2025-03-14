@@ -16,5 +16,7 @@ public final class Constants {
     public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
     public static final double ROLLER_FIRST_EJECT_VALUE = -0.2;
     public static final double ROLLER_STACKED_EJECT_VALUE = -0.3;
+    public static final double ROLLER_REALIGN_VALUE = 0.1;
+    public static final double ROLLER_JOG_VALUE = -0.02;
   }
 }

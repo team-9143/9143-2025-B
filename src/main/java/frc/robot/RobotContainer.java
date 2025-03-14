@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,6 +27,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.commands.EjectFirstPieceCommand;
 import frc.robot.commands.EjectStackedPieceCommand;
 import frc.robot.commands.RealignPieceCommand;
+import frc.robot.commands.JogPieceCommand;
 
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.KitBot;
@@ -55,8 +57,14 @@ public class RobotContainer {
     private final ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
 
     public RobotContainer() {
+
+        NamedCommands.registerCommand("EjectFirstPieceCommand", new EjectFirstPieceCommand(kitbot));
+        NamedCommands.registerCommand("EjectStackedPieceCommand", new EjectStackedPieceCommand(kitbot));
+        NamedCommands.registerCommand("RealignPieceCommand", new RealignPieceCommand(kitbot));
+        NamedCommands.registerCommand("JogPieceCommand", new JogPieceCommand(kitbot));
+
         // Create auto chooser and put it on the Auto tab in Shuffleboard
-        autoChooser = AutoBuilder.buildAutoChooser("Example Auto");
+        autoChooser = AutoBuilder.buildAutoChooser("Left Station - Mid Reef");
         autoTab.add("Auto Mode", autoChooser)
             .withSize(2, 1)
             .withPosition(0, 0);
@@ -114,6 +122,9 @@ public class RobotContainer {
 
         // KitBot re-align
         operator_controller.x().whileTrue(new RealignPieceCommand(kitbot));
+
+        // KitBot jog
+        operator_controller.a().whileTrue(new JogPieceCommand(kitbot));
     }
 
     public Command getAutonomousCommand() {

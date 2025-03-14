@@ -5,25 +5,25 @@ import frc.robot.Constants.KitBotConstants;
 import frc.robot.subsystems.KitBot;
 
 /**
- * A command that realigns a piece by running the roller in reverse.
+ * A command that jogs a piece by running the roller slowly.
  * The command runs until canceled.
  */
-public class RealignPieceCommand extends Command {
+public class JogPieceCommand extends Command {
     private final KitBot m_kitbot;
 
     /**
-     * Creates a new RealignPieceCommand.
+     * Creates a new JogPieceCommand.
      *
      * @param kitbot The KitBot subsystem
      */
-    public RealignPieceCommand(KitBot kitbot) {
+    public JogPieceCommand(KitBot kitbot) {
         m_kitbot = kitbot;
         addRequirements(kitbot);
     }
 
     @Override
     public void initialize() {
-        KitBot.rollerMotor.set(KitBotConstants.ROLLER_REALIGN_VALUE);
+        KitBot.rollerMotor.set(KitBotConstants.ROLLER_JOG_VALUE);
     }
 
     @Override
