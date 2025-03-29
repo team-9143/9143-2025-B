@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.62825,
-        "y": 0.6904999999999996
+        "x": 0.146,
+        "y": 0.9
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1060459716235846,
-        "y": 1.692425348108019
+        "x": 0.668152967639136,
+        "y": 1.7072522163441861
       },
       "isLocked": false,
-      "linkedName": "Right Station - Right Side"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.16875,
-        "y": 4.03475
+        "x": 2.5,
+        "y": 4.5
       },
       "prevControl": {
-        "x": 2.8248789466547004,
-        "y": 3.4228425569917613
-      },
-      "nextControl": {
-        "x": 3.2912268572576955,
-        "y": 4.2526936152684405
-      },
-      "isLocked": false,
-      "linkedName": "Front Mid Reef"
-    },
-    {
-      "anchor": {
-        "x": 4.056,
-        "y": 4.75625
-      },
-      "prevControl": {
-        "x": 4.271730167225243,
-        "y": 4.882584852471392
+        "x": 2.3807533541402273,
+        "y": 4.280272356197055
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right",
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": -126.0

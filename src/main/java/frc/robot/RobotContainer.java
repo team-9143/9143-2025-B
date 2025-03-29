@@ -16,13 +16,16 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
+import frc.robot.Constants.AlLowConstants;
 
 import frc.robot.commands.EjectFirstPieceCommand;
 import frc.robot.commands.EjectStackedPieceCommand;
@@ -31,6 +34,7 @@ import frc.robot.commands.JogPieceCommand;
 
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.KitBot;
+import frc.robot.subsystems.AlLow;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -52,6 +56,7 @@ public class RobotContainer {
 
     public final Swerve swerve = TunerConstants.createDrivetrain();
     public final KitBot kitbot = new KitBot();
+    private final AlLow allow = new AlLow();
 
     private final SendableChooser<Command> autoChooser;
     private final ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
@@ -65,9 +70,7 @@ public class RobotContainer {
 
         // Create auto chooser and put it on the Auto tab in Shuffleboard
         autoChooser = AutoBuilder.buildAutoChooser("Center Drop Plus One");
-        autoTab.add("Auto Mode", autoChooser)
-            .withSize(3, 2)
-            .withPosition(0, 0);
+        SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
     }
@@ -125,6 +128,41 @@ public class RobotContainer {
 
         // KitBot jog
         operator_controller.a().whileTrue(new JogPieceCommand(kitbot));
+
+        // AlLow extension (with rollers activated)
+        operator_controller.povDown().onTrue(Commands.run(() -> {
+            allow.setPivotAngle(AlLowConstants.PivotPresetAngles.INTAKE.getAngle()); // Extend to intaking angle
+            allow.setRollerSpeed(-0.3); // Spin rollers inward
+        }, allow));
+
+        // AlLow hold (with rollers stopped)
+        operator_controller.povRight().onTrue(Commands.run(() -> {
+            allow.setPivotAngle(AlLowConstants.PivotPresetAngles.HOLD.getAngle()); // Retract to base angle
+            allow.stopRoller(); // Stop rollers
+        }, allow));
+
+        // AlLow retraction (with rollers stopped)
+        operator_controller.povUp().onTrue(Commands.run(() -> {
+            allow.setPivotAngle(AlLowConstants.PivotPresetAngles.BASE.getAngle()); // Retract to base angle
+            allow.stopRoller(); // Stop rollers
+        }, allow));
+
+        // AlLow ejection
+        operator_controller.rightTrigger().whileTrue(Commands.run(() -> {
+            allow.setRollerSpeed(0.6);}, allow)).onFalse(Commands.runOnce(() -> allow.stopRoller(), allow));
+
+        // AlLow manual intake
+        operator_controller.leftTrigger().whileTrue(Commands.run(() -> {
+            allow.setRollerSpeed(-0.3);}, allow)).onFalse(Commands.runOnce(() -> allow.stopRoller(), allow));
+
+        // AlLow pivot encoder reset
+        operator_controller.start().onTrue(Commands.runOnce(() -> allow.resetPivotEncoder(), allow).ignoringDisable(true));
+
+        // AlLow pivot manual control
+        allow.setDefaultCommand(Commands.run(() -> {
+            double speed = -operator_controller.getRightY(); // Use right stick X for pivot control
+            allow.manualPivotControl(speed);
+        }, allow));
     }
 
     public Command getAutonomousCommand() {
@@ -134,5 +172,7 @@ public class RobotContainer {
 
     public void disabledInit() {
         KitBot.rollerMotor.stopMotor();
+        allow.stopPivot();
+        allow.stopRoller();
     }
 }

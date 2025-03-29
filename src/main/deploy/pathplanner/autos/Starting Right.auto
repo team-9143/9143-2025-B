@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Drop"
+            "pathName": "Right Cage to Back Right Reef"
           }
         },
         {
@@ -19,19 +19,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Back Mid to Left Station"
+            "pathName": "Back Right Reef to Right Station"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Station to Left Reef"
+            "pathName": "Right Station to Right Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "EjectFirstPieceCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Reef to Right Station"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Station to Front Reef"
           }
         },
         {
